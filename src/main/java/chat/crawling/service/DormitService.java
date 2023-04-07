@@ -1,6 +1,5 @@
 package chat.crawling.service;
 
-import chat.crawling.menu.DormitMenu;
 import chat.crawling.menu.Menu;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

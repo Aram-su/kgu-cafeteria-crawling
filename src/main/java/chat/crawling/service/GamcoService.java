@@ -1,6 +1,5 @@
 package chat.crawling.service;
 
-import chat.crawling.menu.GamcoMenu;
 import chat.crawling.menu.Menu;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
