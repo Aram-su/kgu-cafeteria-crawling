@@ -1,6 +1,7 @@
 package chat.crawling.service;
 
 import chat.crawling.menu.Menu;
+import chat.crawling.repository.MenuRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,14 +14,20 @@ import java.util.List;
 
 public class DormitService {
 
-    private final static int year = LocalDate.now().getYear();
-    private final static int month = LocalDate.now().getMonthValue();
-    private final static int day = LocalDate.now().getDayOfMonth();
-    private final static String gamcoURL = "https://dorm.kyonggi.ac.kr:446/Khostel/mall_main.php?viewform=B0001_foodboard_list" +
+    private final int year = LocalDate.now().getYear();
+    private final int month = LocalDate.now().getMonthValue();
+    private final int day = LocalDate.now().getDayOfMonth();
+    private final String gamcoURL = "https://dorm.kyonggi.ac.kr:446/Khostel/mall_main.php?viewform=B0001_foodboard_list" +
             "&gyear="+year+"&gmonth="+month+"&gday="+day;
-    private final static String dormitPrice = "4,500원";
+    private final String dormitPrice = "4,500원";
 
-    public static List<Menu> getDormitMenus() throws IOException {
+    private final MenuRepository menuRepository;
+
+    public DormitService(MenuRepository menuRepository) {
+        this.menuRepository = menuRepository;
+    }
+
+    public List<Menu> getDormitMenus() throws IOException {
         List<Menu> menus = new ArrayList<>();
 
         Document doc = Jsoup.connect(gamcoURL).get();
@@ -48,23 +55,26 @@ public class DormitService {
             dinner.setLunchOrDinner( "저녁" );
 
             String[] temp = content.select("td:nth-child(3)").text().split(" ");
-            lunch.setMenu01( temp[0] );
-            lunch.setMenu02( temp[1] );
-            lunch.setMenu03( temp[2] );
-            lunch.setMenu04( temp[3] );
-            lunch.setMenu05( temp[4] );
-            lunch.setMenu06( temp[5] );
+            lunch.setMenu01( temp[0].trim() );
+            lunch.setMenu02( temp[1].trim() );
+            lunch.setMenu03( temp[2].trim() );
+            lunch.setMenu04( temp[3].trim() );
+            lunch.setMenu05( temp[4].trim() );
+            lunch.setMenu06( temp[5].trim() );
 
             temp = content.select("td:nth-child(4)").text().split(" ");
-            dinner.setMenu01( temp[0] );
-            dinner.setMenu02( temp[1] );
-            dinner.setMenu03( temp[2] );
-            dinner.setMenu04( temp[3] );
-            dinner.setMenu05( temp[4] );
-            dinner.setMenu06( temp[5] );
+            dinner.setMenu01( temp[0].trim() );
+            dinner.setMenu02( temp[1].trim() );
+            dinner.setMenu03( temp[2].trim() );
+            dinner.setMenu04( temp[3].trim() );
+            dinner.setMenu05( temp[4].trim() );
+            dinner.setMenu06( temp[5].trim() );
 
             menus.add(lunch);
             menus.add(dinner);
+
+            menuRepository.save(lunch);
+            menuRepository.save(dinner);
         }
 
         return menus;

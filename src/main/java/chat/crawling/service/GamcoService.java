@@ -1,6 +1,7 @@
 package chat.crawling.service;
 
 import chat.crawling.menu.Menu;
+import chat.crawling.repository.MenuRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,9 +16,15 @@ import java.util.List;
 import java.util.Locale;
 
 public class GamcoService {
-    private final static String gamcoURL = "http://www.kyonggi.ac.kr/webRestMenu.kgu?mzcode=K00M04038500&restGb=suwon";
+    private final String gamcoURL = "http://www.kyonggi.ac.kr/webRestMenu.kgu?mzcode=K00M04038500&restGb=suwon";
 
-    public static List<Menu> getGamcoMenus() throws IOException {
+    private final MenuRepository menuRepository;
+
+    public GamcoService(MenuRepository menuRepository) {
+        this.menuRepository = menuRepository;
+    }
+
+    public List<Menu> getGamcoMenus() throws IOException {
         List<Menu> menus = new ArrayList<>();
 
         Document doc = Jsoup.connect(gamcoURL).get();
@@ -49,15 +56,18 @@ public class GamcoService {
 
             String[] temp = content.select("td:last-child").text().split("\\|");
 
-            menu.setMenu01( temp[0] );
-            menu.setMenu02( temp[1] );
-            menu.setMenu03( temp[2] );
-            menu.setMenu04( temp[3] );
-            menu.setMenu05( temp[4] );
-            menu.setMenu06( temp[5] );
+
+            menu.setMenu01( temp[0].trim() );
+            menu.setMenu02( temp[1].trim() );
+            menu.setMenu03( temp[2].trim() );
+            menu.setMenu04( temp[3].trim() );
+            menu.setMenu05( temp[4].trim() );
+            menu.setMenu06( temp[5].trim() );
 
             menus.add( menu );
+            menuRepository.save( menu );
         }
+
         return menus;
     }
 }
