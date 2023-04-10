@@ -12,6 +12,7 @@ public class MemoryMenuRepository implements MenuRepository{
 
     @Override
     public Menu save(Menu menu) {
+        //save 시 날짜 같은거 때문에 저장이 제대로 안된다. 수정하자
         store.put(menu.getDate(), menu);
         return menu;
     }

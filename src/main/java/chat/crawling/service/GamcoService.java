@@ -1,6 +1,7 @@
 package chat.crawling.service;
 
 import chat.crawling.menu.Menu;
+import chat.crawling.repository.MenuRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,9 +16,15 @@ import java.util.List;
 import java.util.Locale;
 
 public class GamcoService {
-    private final static String gamcoURL = "http://www.kyonggi.ac.kr/webRestMenu.kgu?mzcode=K00M04038500&restGb=suwon";
+    private final String gamcoURL = "http://www.kyonggi.ac.kr/webRestMenu.kgu?mzcode=K00M04038500&restGb=suwon";
 
-    public static List<Menu> getGamcoMenus() throws IOException {
+    private final MenuRepository menuRepository;
+
+    public GamcoService(MenuRepository menuRepository) {
+        this.menuRepository = menuRepository;
+    }
+
+    public List<Menu> getGamcoMenus() throws IOException {
         List<Menu> menus = new ArrayList<>();
 
         Document doc = Jsoup.connect(gamcoURL).get();
@@ -58,7 +65,9 @@ public class GamcoService {
             menu.setMenu06( temp[5].trim() );
 
             menus.add( menu );
+            menuRepository.save( menu );
         }
+
         return menus;
     }
 }

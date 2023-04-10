@@ -1,6 +1,7 @@
 package chat.crawling;
 
 import chat.crawling.menu.Menu;
+import chat.crawling.repository.MemoryMenuRepository;
 import chat.crawling.service.DormitService;
 import chat.crawling.service.GamcoService;
 
@@ -10,15 +11,18 @@ import java.util.List;
 public class Date {
     public static void main(String[] args) throws IOException {
 
+        MemoryMenuRepository memoryMenuRepository = new MemoryMenuRepository();
+        GamcoService gamcoService = new GamcoService(memoryMenuRepository);
+        DormitService dormitService = new DormitService(memoryMenuRepository);
 
-        List<Menu> gamcoMenus = GamcoService.getGamcoMenus();
-        for ( Menu gm : gamcoMenus )
-            System.out.println( gm.toString() );
+        gamcoService.getGamcoMenus();
+        dormitService.getDormitMenus();
+
+        System.out.println( memoryMenuRepository.findTodayGamco() );
+        System.out.println( memoryMenuRepository.findTodayDormit() );
 
         System.out.println();
+        System.out.println( memoryMenuRepository.findThisWeek() );
 
-        List<Menu> dormitMenus = DormitService.getDormitMenus();
-        for ( Menu dm : dormitMenus )
-            System.out.println( dm.toString() );
     }
 }
