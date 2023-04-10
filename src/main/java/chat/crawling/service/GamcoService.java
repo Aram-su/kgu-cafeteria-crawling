@@ -49,12 +49,13 @@ public class GamcoService {
 
             String[] temp = content.select("td:last-child").text().split("\\|");
 
-            menu.setMenu01( temp[0] );
-            menu.setMenu02( temp[1] );
-            menu.setMenu03( temp[2] );
-            menu.setMenu04( temp[3] );
-            menu.setMenu05( temp[4] );
-            menu.setMenu06( temp[5] );
+
+            menu.setMenu01( temp[0].trim() );
+            menu.setMenu02( temp[1].trim() );
+            menu.setMenu03( temp[2].trim() );
+            menu.setMenu04( temp[3].trim() );
+            menu.setMenu05( temp[4].trim() );
+            menu.setMenu06( temp[5].trim() );
 
             menus.add( menu );
         }
