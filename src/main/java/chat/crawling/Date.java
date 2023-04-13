@@ -6,7 +6,6 @@ import chat.crawling.service.DormitService;
 import chat.crawling.service.GamcoService;
 
 import java.io.IOException;
-import java.util.List;
 
 public class Date {
     public static void main(String[] args) throws IOException {
@@ -20,9 +19,11 @@ public class Date {
 
         System.out.println( memoryMenuRepository.findTodayGamco() );
         System.out.println( memoryMenuRepository.findTodayDormit() );
+        System.out.println( memoryMenuRepository.findToday() );
 
         System.out.println();
-        System.out.println( memoryMenuRepository.findThisWeek() );
+        for ( Menu m : memoryMenuRepository.findThisWeek() )
+            System.out.println( m );
 
     }
 }

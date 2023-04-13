@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 public class MemoryMenuRepository implements MenuRepository{
 
-    private static Map<String, Menu> store = new HashMap<>();
+    private static Map<Key, Menu> store = new HashMap<>();
 
     @Override
     public Menu save(Menu menu) {
         //save 시 날짜 같은거 때문에 저장이 제대로 안된다. 수정하자
-        store.put(menu.getDate(), menu);
+        store.put(new Key(menu.getCafeteria(), menu.getDate(), menu.getLunchOrDinner()), menu);
         return menu;
     }
 
