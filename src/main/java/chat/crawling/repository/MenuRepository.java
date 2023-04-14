@@ -11,15 +11,5 @@ public interface MenuRepository {
 
     Menu save(Menu menu);
 
-    List<Menu> findToday();
-
-    Optional<Menu> findTodayGamco();
-
-    Optional<Menu> findTodayDormit();
-
-    List<Menu> findThisWeek();
-
-    List<Menu> findThisWeekGamco();
-
-    List<Menu> findThisWeekDormit();
+    void deleteAll();
 }

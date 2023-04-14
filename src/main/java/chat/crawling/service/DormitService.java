@@ -2,20 +2,19 @@ package chat.crawling.service;
 
 import chat.crawling.menu.Menu;
 import chat.crawling.repository.MenuRepository;
+import jakarta.transaction.Transactional;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Transactional
 public class DormitService {
 
     private final int year = LocalDate.now().getYear();
@@ -27,7 +26,6 @@ public class DormitService {
 
     private final MenuRepository menuRepository;
 
-    @Autowired
     public DormitService(MenuRepository menuRepository) {
         this.menuRepository = menuRepository;
     }
@@ -57,8 +55,8 @@ public class DormitService {
             lunch.setPrice(dormitPrice);
             dinner.setPrice(dormitPrice);
 
-            lunch.setLunchOrDinner( "점심" );
-            dinner.setLunchOrDinner( "저녁" );
+            lunch.setLunch_or_dinner( "점심" );
+            dinner.setLunch_or_dinner( "저녁" );
 
             String[] temp = content.select("td:nth-child(3)").text().split(" ");
             lunch.setMenu01( temp[0].trim() );
