@@ -6,6 +6,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.DayOfWeek;
@@ -15,15 +18,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+@Service
 public class GamcoService {
     private final String gamcoURL = "http://www.kyonggi.ac.kr/webRestMenu.kgu?mzcode=K00M04038500&restGb=suwon";
 
     private final MenuRepository menuRepository;
 
+    @Autowired
     public GamcoService(MenuRepository menuRepository) {
         this.menuRepository = menuRepository;
     }
 
+    @Scheduled(cron="0 30 9 ? * MON-FRI")
     public List<Menu> getGamcoMenus() throws IOException {
         List<Menu> menus = new ArrayList<>();
 
@@ -67,7 +73,7 @@ public class GamcoService {
             menus.add( menu );
             menuRepository.save( menu );
         }
-
+        System.out.println(menus);
         return menus;
     }
 }

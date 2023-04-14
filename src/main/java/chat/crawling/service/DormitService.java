@@ -6,12 +6,16 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class DormitService {
 
     private final int year = LocalDate.now().getYear();
@@ -23,10 +27,12 @@ public class DormitService {
 
     private final MenuRepository menuRepository;
 
+    @Autowired
     public DormitService(MenuRepository menuRepository) {
         this.menuRepository = menuRepository;
     }
 
+    @Scheduled(cron="0 30 9 ? * MON-FRI")
     public List<Menu> getDormitMenus() throws IOException {
         List<Menu> menus = new ArrayList<>();
 
@@ -76,7 +82,7 @@ public class DormitService {
             menuRepository.save(lunch);
             menuRepository.save(dinner);
         }
-
+        System.out.println(menus);
         return menus;
     }
 }
