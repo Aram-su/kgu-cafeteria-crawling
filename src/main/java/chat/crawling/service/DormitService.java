@@ -30,6 +30,8 @@ public class DormitService {
         this.menuRepository = menuRepository;
     }
 
+    //@Scheduled(fixedDelay = 10000)
+    //매주 월~금 오전 09시 30분 에 테이블에 기숙사식당의 메뉴 정보를 저장함
     @Scheduled(cron="0 30 9 ? * MON-FRI")
     public List<Menu> getDormitMenus() throws IOException {
         List<Menu> menus = new ArrayList<>();
@@ -59,20 +61,89 @@ public class DormitService {
             dinner.setLunch_or_dinner( "저녁" );
 
             String[] temp = content.select("td:nth-child(3)").text().split(" ");
-            lunch.setMenu01( temp[0].trim() );
-            lunch.setMenu02( temp[1].trim() );
-            lunch.setMenu03( temp[2].trim() );
-            lunch.setMenu04( temp[3].trim() );
-            lunch.setMenu05( temp[4].trim() );
-            lunch.setMenu06( temp[5].trim() );
+
+            lunch.setMenu01( "없음" );
+            lunch.setMenu02( "없음" );
+            lunch.setMenu03( "없음" );
+            lunch.setMenu04( "없음" );
+            lunch.setMenu05( "없음" );
+            lunch.setMenu06( "없음" );
+
+            if ( temp.length > 6 ){
+                for ( int j = 6 ; j < temp.length ; j++){
+                    temp[5] = temp[5] + "/" +temp[j];
+                }
+            }
+            if ( temp.length >= 6 ){
+                lunch.setMenu01( temp[0].trim() );
+                lunch.setMenu02( temp[1].trim() );
+                lunch.setMenu03( temp[2].trim() );
+                lunch.setMenu04( temp[3].trim() );
+                lunch.setMenu05( temp[4].trim() );
+                lunch.setMenu06( temp[5].trim() );
+            } else if (temp.length == 5 ){
+                lunch.setMenu01( temp[0].trim() );
+                lunch.setMenu02( temp[1].trim() );
+                lunch.setMenu03( temp[2].trim() );
+                lunch.setMenu04( temp[3].trim() );
+                lunch.setMenu05( temp[4].trim() );
+            } else if (temp.length == 4 ){
+                lunch.setMenu01( temp[0].trim() );
+                lunch.setMenu02( temp[1].trim() );
+                lunch.setMenu03( temp[2].trim() );
+                lunch.setMenu04( temp[3].trim() );
+            } else if (temp.length == 3 ){
+                lunch.setMenu01( temp[0].trim() );
+                lunch.setMenu02( temp[1].trim() );
+                lunch.setMenu03( temp[2].trim() );
+            } else if (temp.length == 2 ){
+                lunch.setMenu01( temp[0].trim() );
+                lunch.setMenu02( temp[1].trim() );
+            } else if (temp.length == 1 ){
+                lunch.setMenu01( temp[0].trim() );
+            }
 
             temp = content.select("td:nth-child(4)").text().split(" ");
-            dinner.setMenu01( temp[0].trim() );
-            dinner.setMenu02( temp[1].trim() );
-            dinner.setMenu03( temp[2].trim() );
-            dinner.setMenu04( temp[3].trim() );
-            dinner.setMenu05( temp[4].trim() );
-            dinner.setMenu06( temp[5].trim() );
+            dinner.setMenu01( "없음" );
+            dinner.setMenu02( "없음" );
+            dinner.setMenu03( "없음" );
+            dinner.setMenu04( "없음" );
+            dinner.setMenu05( "없음" );
+            dinner.setMenu06( "없음" );
+
+            if ( temp.length > 6 ){
+                for ( int j = 6 ; j < temp.length ; j++){
+                    temp[5] = temp[5] + "/" +temp[j];
+                }
+            }
+            if ( temp.length >= 6 ){
+                dinner.setMenu01( temp[0].trim() );
+                dinner.setMenu02( temp[1].trim() );
+                dinner.setMenu03( temp[2].trim() );
+                dinner.setMenu04( temp[3].trim() );
+                dinner.setMenu05( temp[4].trim() );
+                dinner.setMenu06( temp[5].trim() );
+            } else if (temp.length == 5 ){
+                dinner.setMenu01( temp[0].trim() );
+                dinner.setMenu02( temp[1].trim() );
+                dinner.setMenu03( temp[2].trim() );
+                dinner.setMenu04( temp[3].trim() );
+                dinner.setMenu05( temp[4].trim() );
+            } else if (temp.length == 4 ){
+                dinner.setMenu01( temp[0].trim() );
+                dinner.setMenu02( temp[1].trim() );
+                dinner.setMenu03( temp[2].trim() );
+                dinner.setMenu04( temp[3].trim() );
+            } else if (temp.length == 3 ){
+                dinner.setMenu01( temp[0].trim() );
+                dinner.setMenu02( temp[1].trim() );
+                dinner.setMenu03( temp[2].trim() );
+            } else if (temp.length == 2 ){
+                dinner.setMenu01( temp[0].trim() );
+                dinner.setMenu02( temp[1].trim() );
+            } else if (temp.length == 1 ){
+                dinner.setMenu01( temp[0].trim() );
+            }
 
             menus.add(lunch);
             menus.add(dinner);

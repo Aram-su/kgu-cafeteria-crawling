@@ -27,6 +27,8 @@ public class GamcoService {
         this.menuRepository = menuRepository;
     }
 
+    //@Scheduled(fixedDelay = 10000)
+    //매주 월~금 오전 09시 30분 에 테이블에 감성코어의 메뉴 정보를 저장함
     @Scheduled(cron="0 30 9 ? * MON-FRI")
     public List<Menu> getGamcoMenus() throws IOException {
         List<Menu> menus = new ArrayList<>();
@@ -60,13 +62,46 @@ public class GamcoService {
 
             String[] temp = content.select("td:last-child").text().split("\\|");
 
+            menu.setMenu01( "없음" );
+            menu.setMenu02( "없음" );
+            menu.setMenu03( "없음" );
+            menu.setMenu04( "없음" );
+            menu.setMenu05( "없음" );
+            menu.setMenu06( "없음" );
 
-            menu.setMenu01( temp[0].trim() );
-            menu.setMenu02( temp[1].trim() );
-            menu.setMenu03( temp[2].trim() );
-            menu.setMenu04( temp[3].trim() );
-            menu.setMenu05( temp[4].trim() );
-            menu.setMenu06( temp[5].trim() );
+            if ( temp.length > 6 ){
+                for ( int i = 6 ; i < temp.length ; i++){
+                    temp[5] = temp[5] + "/" +temp[i];
+                }
+            }
+            if ( temp.length >= 6 ){
+                menu.setMenu01( temp[0].trim() );
+                menu.setMenu02( temp[1].trim() );
+                menu.setMenu03( temp[2].trim() );
+                menu.setMenu04( temp[3].trim() );
+                menu.setMenu05( temp[4].trim() );
+                menu.setMenu06( temp[5].trim() );
+            } else if (temp.length == 5 ){
+                menu.setMenu01( temp[0].trim() );
+                menu.setMenu02( temp[1].trim() );
+                menu.setMenu03( temp[2].trim() );
+                menu.setMenu04( temp[3].trim() );
+                menu.setMenu05( temp[4].trim() );
+            } else if (temp.length == 4 ){
+                menu.setMenu01( temp[0].trim() );
+                menu.setMenu02( temp[1].trim() );
+                menu.setMenu03( temp[2].trim() );
+                menu.setMenu04( temp[3].trim() );
+            } else if (temp.length == 3 ){
+                menu.setMenu01( temp[0].trim() );
+                menu.setMenu02( temp[1].trim() );
+                menu.setMenu03( temp[2].trim() );
+            } else if (temp.length == 2 ){
+                menu.setMenu01( temp[0].trim() );
+                menu.setMenu02( temp[1].trim() );
+            } else if (temp.length == 1 ){
+                menu.setMenu01( temp[0].trim() );
+            }
 
             menus.add( menu );
             menuRepository.save( menu );

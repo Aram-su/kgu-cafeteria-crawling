@@ -16,10 +16,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.jsoup:jsoup:1.15.3' //크롤링
-	//implementation group: 'org.python', name: 'jython-standalone', version: '2.7.3' //jython
-	//implementation 'org.python:jython-slim:2.7.3rc1' //jython
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	runtimeOnly 'com.h2database:h2'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' //jpa 사용
+	//runtimeOnly 'com.h2database:h2' //H2 DB
+	implementation 'mysql:mysql-connector-java' //mysql
+	implementation 'mysql:mysql-connector-java:8.0.27' // com.mysql.cj.jdbc.Driver
 }
 
 tasks.named('test') {

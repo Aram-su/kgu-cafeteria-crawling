@@ -13,7 +13,9 @@ public class DeleteService {
         this.menuRepository = menuRepository;
     }
 
-    @Scheduled(cron="0 25 9 ? * MON-FRI")
+    //@Scheduled(fixedDelay = 10000)
+    //매주 월~금 오전 09시 29분 45초에 테이블의 데이터를 지움
+    @Scheduled(cron="45 29 9 ? * MON-FRI")
     public void deleteMenus(){
         menuRepository.deleteAll();
     }
