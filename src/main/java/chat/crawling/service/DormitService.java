@@ -20,7 +20,7 @@ public class DormitService {
     private final int year = LocalDate.now().getYear();
     private final int month = LocalDate.now().getMonthValue();
     private final int day = LocalDate.now().getDayOfMonth();
-    private final String gamcoURL = "https://dorm.kyonggi.ac.kr:446/Khostel/mall_main.php?viewform=B0001_foodboard_list" +
+    private final String dormitURL = "https://dorm.kyonggi.ac.kr:446/Khostel/mall_main.php?viewform=B0001_foodboard_list" +
             "&gyear="+year+"&gmonth="+month+"&gday="+day;
     private final String dormitPrice = "4,500원";
 
@@ -36,7 +36,7 @@ public class DormitService {
     public List<Menu> getDormitMenus() throws IOException {
         List<Menu> menus = new ArrayList<>();
 
-        Document doc = Jsoup.connect(gamcoURL).get();
+        Document doc = Jsoup.connect(dormitURL).get();
         Elements contents = doc.select("tbody tbody tbody tbody tbody tr");
 
         for ( int i = 4 ; i <= 8 ; i++){
@@ -61,13 +61,6 @@ public class DormitService {
             dinner.setLunch_or_dinner( "저녁" );
 
             String[] temp = content.select("td:nth-child(3)").text().split(" ");
-
-            lunch.setMenu01( "없음" );
-            lunch.setMenu02( "없음" );
-            lunch.setMenu03( "없음" );
-            lunch.setMenu04( "없음" );
-            lunch.setMenu05( "없음" );
-            lunch.setMenu06( "없음" );
 
             if ( temp.length > 6 ){
                 for ( int j = 6 ; j < temp.length ; j++){
@@ -104,12 +97,6 @@ public class DormitService {
             }
 
             temp = content.select("td:nth-child(4)").text().split(" ");
-            dinner.setMenu01( "없음" );
-            dinner.setMenu02( "없음" );
-            dinner.setMenu03( "없음" );
-            dinner.setMenu04( "없음" );
-            dinner.setMenu05( "없음" );
-            dinner.setMenu06( "없음" );
 
             if ( temp.length > 6 ){
                 for ( int j = 6 ; j < temp.length ; j++){
