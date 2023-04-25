@@ -13,12 +13,12 @@ public class Menu {
     private String day;
     private String price;
     private String lunch_or_dinner;
-    private String menu01;
-    private String menu02;
-    private String menu03;
-    private String menu04;
-    private String menu05;
-    private String menu06;
+    private String menu01 = "없음";
+    private String menu02 = "없음";
+    private String menu03 = "없음";
+    private String menu04 = "없음";
+    private String menu05 = "없음";
+    private String menu06 = "없음";
 
 
     public Long getId() {
