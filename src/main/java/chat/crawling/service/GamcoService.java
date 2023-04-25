@@ -62,13 +62,6 @@ public class GamcoService {
 
             String[] temp = content.select("td:last-child").text().split("\\|");
 
-            menu.setMenu01( "없음" );
-            menu.setMenu02( "없음" );
-            menu.setMenu03( "없음" );
-            menu.setMenu04( "없음" );
-            menu.setMenu05( "없음" );
-            menu.setMenu06( "없음" );
-
             if ( temp.length > 6 ){
                 for ( int i = 6 ; i < temp.length ; i++){
                     temp[5] = temp[5] + "/" +temp[i];
