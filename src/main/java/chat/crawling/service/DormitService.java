@@ -17,11 +17,6 @@ import java.util.List;
 @Transactional
 public class DormitService {
 
-    private final int year = LocalDate.now().getYear();
-    private final int month = LocalDate.now().getMonthValue();
-    private final int day = LocalDate.now().getDayOfMonth();
-    private final String dormitURL = "https://dorm.kyonggi.ac.kr:446/Khostel/mall_main.php?viewform=B0001_foodboard_list" +
-            "&gyear="+year+"&gmonth="+month+"&gday="+day;
     private final String dormitPrice = "4,500원";
 
     private final MenuRepository menuRepository;
@@ -34,6 +29,13 @@ public class DormitService {
     //매주 월~금 오전 09시 30분 에 테이블에 기숙사식당의 메뉴 정보를 저장함
     @Scheduled(cron="0 30 9 ? * MON-FRI")
     public List<Menu> getDormitMenus() throws IOException {
+
+        int year = LocalDate.now().getYear();
+        int month = LocalDate.now().getMonthValue();
+        int day = LocalDate.now().getDayOfMonth();
+        String dormitURL = "https://dorm.kyonggi.ac.kr:446/Khostel/mall_main.php?viewform=B0001_foodboard_list" +
+                "&gyear="+year+"&gmonth="+month+"&gday="+day;
+
         List<Menu> menus = new ArrayList<>();
 
         Document doc = Jsoup.connect(dormitURL).get();
